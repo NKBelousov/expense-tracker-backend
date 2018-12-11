@@ -1,0 +1,19 @@
+{
+  "name": "expense-tracker-backend",
+  "version": "0.0.1",
+  "description": "A simple expense tracker API server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NKBelousov/expense-tracker-backend.git"
+  },
+  "author": "NKBelousov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NKBelousov/expense-tracker-backend/issues"
+  },
+  "homepage": "https://github.com/NKBelousov/expense-tracker-backend#readme"
+}
