@@ -1,7 +1,10 @@
 const express = require('express');
 
-const app = express();
+const AccessTokenMiddleware = require('./middlewares/AccessTokenMiddleware');
+
 const port = 3000;
+const app = express()
+  .use(AccessTokenMiddleware);
 
 app.get('/', (req, res) => {
   res.json({
