@@ -1,6 +1,10 @@
-const isValid = token => token === "secret";
+import { RequestHandler } from "express";
 
-module.exports = function (req, res, next) {
+const isValid = (token: String): Boolean => {
+  return token === "secret";
+};
+
+const handler: RequestHandler = function (req, res, next) {
   const token = req.get("Authorization");
   if (isValid(token)) {
     next();
@@ -10,3 +14,5 @@ module.exports = function (req, res, next) {
     });
   }
 }
+
+export default handler;

@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 
-const AccessTokenMiddleware = require('./middlewares/AccessTokenMiddleware');
+import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
+
+import IndexHandler from "./handlers/IndexHandler";
 
 const port = 3000;
 const app = express()
   .use(AccessTokenMiddleware);
 
-app.get('/', (req, res) => {
-  res.json({
-    message: `Hello, Express`,
-  });
-});
+const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app
+  .get('/', IndexHandler)
+  .listen(port, createdCallback);
