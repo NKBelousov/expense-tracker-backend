@@ -1,15 +1,31 @@
-const express = require("express");
-
 import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
 
 import IndexHandler from "./handlers/IndexHandler";
 
-const port = 3000;
-const app = express()
-  .use(AccessTokenMiddleware);
+async function main() {
 
-const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
+  const { Client } = require('pg');
+  const dotenv = require("dotenv").config();
+  const express = require("express");
 
-app
-  .get('/', IndexHandler)
-  .listen(port, createdCallback);
+  const client = new Client({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+  });
+
+  await client.connect();
+
+  const port = process.env.PORT;
+  const app = express()
+    .use(AccessTokenMiddleware);
+
+  const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
+
+  app
+    .get('/', IndexHandler)
+    .listen(port, createdCallback);
+}
+main();
