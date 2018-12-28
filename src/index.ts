@@ -1,6 +1,7 @@
 import { Client } from "pg";
 
 import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
+import AccessControlMiddleware from './middlewares/AccessControlMiddleware';
 import IndexHandler from "./handlers/IndexHandler";
 import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFactory";
 
@@ -20,6 +21,7 @@ async function main() {
 
   const port = process.env.PORT;
   const app = express()
+    .use(AccessControlMiddleware)
     .use(AccessTokenMiddleware);
 
   const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
