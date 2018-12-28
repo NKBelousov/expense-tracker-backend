@@ -1,19 +1,19 @@
-import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
+import { Client } from "pg";
 
+import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
 import IndexHandler from "./handlers/IndexHandler";
+import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFactory";
 
 async function main() {
-
-  const { Client } = require('pg');
   const dotenv = require("dotenv").config();
   const express = require("express");
 
-  const client = new Client({
+  const client: Client = new Client({
     user: process.env.PGUSER,
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
     password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
+    port: Number(process.env.PGPORT),
   });
 
   await client.connect();
@@ -26,6 +26,7 @@ async function main() {
 
   app
     .get('/', IndexHandler)
+    .get('/api/payment/types', GetPaymentTypesHandlerFactory(client))
     .listen(port, createdCallback);
 }
 main();
