@@ -1,1 +1,0 @@
-{"version":3,"file":"IndexHandler.js","sourceRoot":"","sources":["../../src/handlers/IndexHandler.ts"],"names":[],"mappings":";;AAEA,MAAM,YAAY,GAAmB,CAAC,GAAG,EAAE,GAAG,EAAE,EAAE;IAChD,GAAG,CAAC,IAAI,CAAC;QACP,OAAO,EAAE,gBAAgB;KAC1B,CAAC,CAAC;AACL,CAAC,CAAC;AAEF,kBAAe,YAAY,CAAC"}
