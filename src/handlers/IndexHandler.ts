@@ -1,6 +1,6 @@
-import { RequestHandler } from "express";
+import { RequestHandler, Request, Response } from "express";
 
-const IndexHandler: RequestHandler = (req, res) => {
+const IndexHandler: RequestHandler = (req: Request, res: Response) => {
   res.json({
     message: `Hello, Express`,
   });

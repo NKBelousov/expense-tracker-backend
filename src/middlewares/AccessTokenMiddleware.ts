@@ -1,11 +1,11 @@
-import { RequestHandler } from "express";
+import { RequestHandler, Request, Response, NextFunction } from "express";
 
-const isValid = (token: String): Boolean => {
+const isValid: Function = (token: String): Boolean => {
   return token === "secret";
 };
 
-const handler: RequestHandler = function (req, res, next) {
-  const token = req.get("Authorization");
+const handler: RequestHandler = function (req: Request, res: Response, next: NextFunction) {
+  const token: String = req.get("Authorization");
   if (isValid(token)) {
     next();
   } else {
