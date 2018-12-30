@@ -1,6 +1,8 @@
 import { RequestHandler, Request, Response } from "express";
 import { Client, QueryResult } from "pg";
 
+import generateToken from "../utils/generateToken";
+
 const AuthHandlerFactory: Function = (client: Client): RequestHandler => (req: Request, res: Response) => {
   const { name, password } = req.body;
   const query = {
@@ -19,13 +21,20 @@ const AuthHandlerFactory: Function = (client: Client): RequestHandler => (req: R
       });
     } else {
       const user = response.rows[0];
-      res.status(201).json({
-        user: {
-          id: user.id,
-          name: user.name,
-        }
+      const deleteTokens = "DELETE FROM users_tokens WHERE user_id = $1";
+      const token = generateToken();
+      client.query(deleteTokens, [user.id]).then(() => {
+        return client.query("INSERT INTO users_tokens (user_id, token) VALUES ($1, $2)", [user.id, token])
+      }).then(() => {
+        res.status(201).json({
+          user: {
+            id: user.id,
+            name: user.name,
+            token,
+          }
+        });
       });
-    };
+    }
   });
 };
 
