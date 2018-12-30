@@ -1,18 +1,22 @@
-import { RequestHandler, Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
+import { Client, QueryResult, Query } from "pg";
 
-const isValid: Function = (token: String): Boolean => {
-  return token === "secret";
-};
-
-const handler: RequestHandler = function (req: Request, res: Response, next: NextFunction) {
+const handler: Function = (client: Client): RequestHandler => (req: Request, res: Response, next: NextFunction) => {
   const token: String = req.get("Authorization");
-  if (isValid(token)) {
-    next();
-  } else {
-    res.status(401).json({
-      error: "invalid_access_token",
-    });
-  }
-}
+  const query = {
+    text: 'SELECT * FROM users_tokens WHERE token = $1',
+    values: [token],
+    name: 'Find user by token',
+  };
+  client.query(query, (error: Error, response: QueryResult) => {
+    if (error || response.rows.length === 0) {
+      res.status(400).send({
+        message: "invalid_access_token",
+      });
+    } else {
+      next();
+    };
+  });
+};
 
 export default handler;
