@@ -9,6 +9,7 @@ import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFact
 async function main() {
   const dotenv = require("dotenv").config();
   const express = require("express");
+  const bodyParser = require("body-parser");
 
   const client: Client = new Client({
     user: process.env.PGUSER,
@@ -22,6 +23,7 @@ async function main() {
 
   const port = process.env.PORT;
   const app = express()
+    .use(bodyParser.json())
     .use(AccessControlMiddleware)
     .use(AccessTokenMiddleware(client));
 
