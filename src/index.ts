@@ -1,3 +1,4 @@
+import { Application } from "express";
 import { Client } from "pg";
 
 import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
@@ -22,11 +23,14 @@ async function main() {
 
   await client.connect();
 
-  const port = process.env.PORT;
-  const app = express()
+  const port: string = process.env.PORT;
+  const app: Application = express()
     .use(bodyParser.json())
-    .use(AccessControlMiddleware)
-    .use(AccessTokenMiddleware(client));
+    .use(AccessControlMiddleware);
+
+  if (process.env.NODE_ENV === "production") {
+    app.use(AccessTokenMiddleware(client));
+  }
 
   const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
 

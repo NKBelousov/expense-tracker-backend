@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
-import { Client, QueryResult, Query } from "pg";
+import { Client, QueryResult } from "pg";
 
 const handler: Function = (client: Client): RequestHandler => (req: Request, res: Response, next: NextFunction) => {
   if (req.url === "/auth") {
