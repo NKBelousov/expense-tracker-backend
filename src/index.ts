@@ -1,10 +1,11 @@
 import { Application } from "express";
 import { Client } from "pg";
 
-import AccessTokenMiddleware from './middlewares/AccessTokenMiddleware';
-import AccessControlMiddleware from './middlewares/AccessControlMiddleware';
+import AccessTokenMiddleware from "./middlewares/AccessTokenMiddleware";
+import AccessControlMiddleware from "./middlewares/AccessControlMiddleware";
 
 import AuthHandlerFactory from "./handlers/AuthHandlerFactory";
+import GetPaymentsHandlerFactory from "./handlers/GetPaymentsHandlerFactory";
 import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFactory";
 import IndexHandler from "./handlers/IndexHandler";
 
@@ -32,12 +33,14 @@ async function main() {
     app.use(AccessTokenMiddleware(client));
   }
 
-  const createdCallback: Function = () => console.log(`App listening on port ${port}!`);
+  const createdCallback: Function = () =>
+    console.log(`App listening on port ${port}!`);
 
   app
-    .get('/', IndexHandler)
-    .post('/auth', AuthHandlerFactory(client))
-    .get('/api/payment/types', GetPaymentTypesHandlerFactory(client))
+    .get("/", IndexHandler)
+    .post("/auth", AuthHandlerFactory(client))
+    .get("/api/payment/types", GetPaymentTypesHandlerFactory(client))
+    .get("/api/payments", GetPaymentsHandlerFactory(client))
     .listen(port, createdCallback);
 }
 main();
