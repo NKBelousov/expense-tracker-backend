@@ -28,11 +28,8 @@ async function main() {
   const port: string = process.env.PORT;
   const app: Application = express()
     .use(bodyParser.json())
-    .use(AccessControlMiddleware);
-
-  if (process.env.NODE_ENV === "production") {
-    app.use(AccessTokenMiddleware(client));
-  }
+    .use(AccessControlMiddleware)
+    .use(AccessTokenMiddleware(client));
 
   const createdCallback: Function = () =>
     console.log(`App listening on port ${port}!`);
