@@ -9,6 +9,7 @@ import GetPaymentsHandlerFactory from "./handlers/GetPaymentsHandlerFactory";
 import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFactory";
 import IndexHandler from "./handlers/IndexHandler";
 import PostPaymentHandlerFactory from "./handlers/PostPaymentsHandlerFactory";
+import DeletePaymentsHandlerFactory from "./handlers/DeletePaymentsHandlerFactory";
 
 async function main() {
   const dotenv = require("dotenv").config();
@@ -40,6 +41,7 @@ async function main() {
     .get("/api/payment/types", GetPaymentTypesHandlerFactory(client))
     .get("/api/payments", GetPaymentsHandlerFactory(client))
     .post("/api/payments", PostPaymentHandlerFactory(client))
+    .delete("/api/payments/:id", DeletePaymentsHandlerFactory(client))
     .listen(port, createdCallback);
 }
 main();

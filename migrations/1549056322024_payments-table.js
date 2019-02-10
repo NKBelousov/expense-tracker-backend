@@ -2,6 +2,7 @@ exports.shorthands = undefined;
 
 exports.up = pgm => {
   pgm.createTable("users_payments", {
+    id: "id",
     user_id: {
       notNull: true,
       references: "users(id)",
