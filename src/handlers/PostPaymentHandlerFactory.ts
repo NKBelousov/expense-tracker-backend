@@ -1,6 +1,6 @@
 import { Client, QueryResult } from "pg";
 import { Request, Response, NextFunction, RequestHandler } from "express";
-import { IGetUserAuthInfoRequest } from "./../middlewares/AccessTokenMiddleware";
+import { IGetUserAuthInfoRequest } from "../middlewares/AccessTokenMiddleware";
 
 const PostPaymentHandlerFactory: Function = (
   client: Client
