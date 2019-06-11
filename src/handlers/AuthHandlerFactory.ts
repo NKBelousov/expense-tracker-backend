@@ -37,6 +37,7 @@ const AuthHandlerFactory: Function = (client: Client): RequestHandler => (
         .then(() => {
           res.status(200).json({
             token,
+            user_id: user.id,
           });
         });
     }
