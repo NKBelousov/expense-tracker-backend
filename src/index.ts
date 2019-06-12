@@ -5,6 +5,7 @@ import AccessTokenMiddleware from "./middlewares/AccessTokenMiddleware";
 import AccessControlMiddleware from "./middlewares/AccessControlMiddleware";
 
 import AuthHandlerFactory from "./handlers/AuthHandlerFactory";
+import GetUserByIdHandlerFactory from "./handlers/GetUserByIdHandlerFactory";
 import GetPaymentsHandlerFactory from "./handlers/GetPaymentsHandlerFactory";
 import GetPaymentTypesHandlerFactory from "./handlers/GetPaymentTypesHandlerFactory";
 import IndexHandler from "./handlers/IndexHandler";
@@ -39,6 +40,7 @@ async function main() {
   app
     .get("/", IndexHandler)
     .post("/auth", AuthHandlerFactory(client))
+    .get("/api/user/:id", GetUserByIdHandlerFactory(client))
     .get("/api/payment/types", GetPaymentTypesHandlerFactory(client))
     .get("/api/payments", GetPaymentsHandlerFactory(client))
     .get("/api/payments/:id", GetPaymentByIdHandlerFactory(client))

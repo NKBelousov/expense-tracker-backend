@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { Client, QueryResult } from "pg";
 
 export interface IGetUserAuthInfoRequest extends Request {
-  user_id: string;
+  user_id: number;
 }
 
 const handler: Function = (client: Client): RequestHandler => (
