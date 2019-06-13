@@ -1,9 +1,10 @@
 import { Client, QueryResult } from "pg";
 import { Request, Response, NextFunction, RequestHandler } from "express";
+import { IGetUserAuthInfoRequest } from "middlewares/AccessTokenMiddleware";
 
 const GetPaymentByIdHandlerFactory: Function = (
   client: Client
-): RequestHandler => (req: Request, res: Response, next: NextFunction) => {
+): RequestHandler => (req: IGetUserAuthInfoRequest, res: Response) => {
   const id = req.params.id;
   if (typeof id !== "string") {
     res.status(400).json({
@@ -11,8 +12,9 @@ const GetPaymentByIdHandlerFactory: Function = (
     });
     return;
   }
-  const q = "SELECT * FROM users_payments WHERE id = $1 LIMIT 1";
-  client.query(q, [id], (error: Error, response: QueryResult) => {
+  const q =
+    "SELECT * FROM users_payments WHERE id = $1 AND user_id = $2 LIMIT 1";
+  client.query(q, [id, req.user_id], (error: Error, response: QueryResult) => {
     if (error) {
       res.status(400).json({
         error,

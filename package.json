@@ -1,6 +1,6 @@
 {
   "name": "expense-tracker-backend",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "A simple expense tracker API server",
   "main": "index.js",
   "scripts": {
