@@ -19,7 +19,7 @@ const AuthHandlerFactory: Function = (client: Client): RequestHandler => (
         error,
       });
     } else if (response.rows.length === 0) {
-      res.status(400).json({
+      res.status(404).json({
         message: "user_not_found",
       });
     } else {
@@ -35,7 +35,7 @@ const AuthHandlerFactory: Function = (client: Client): RequestHandler => (
           );
         })
         .then(() => {
-          res.status(200).json({
+          res.status(201).json({
             token,
             user_id: user.id,
           });
